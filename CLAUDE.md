@@ -14,16 +14,16 @@ npm run preview   # preview production build
 
 ## Architecture
 
-This is a single-page React app (Vite + React 19). All application logic lives in one file:
+This is a single-page React app (Vite + React 19). There is no routing, no backend, no state management library, and no test suite. Transaction data is held in `App` state only (not persisted).
 
-- `src/App.jsx` — the entire app: state management, filtering logic, form handling, and rendering
+- `src/App.jsx` — root component; owns the `transactions` array and `handleAdd` callback, renders the three child components
+- `src/Summary.jsx` — receives `transactions`, computes `totalIncome`, `totalExpenses`, and `balance` internally
+- `src/TransactionForm.jsx` — owns its own form state; calls `onAdd(transaction)` prop on submit
+- `src/TransactionList.jsx` — receives `transactions`, owns its own filter state (`filterType`, `filterCategory`)
 - `src/App.css` — all styles (flat, no CSS modules or Tailwind)
 - `src/main.jsx` — React root mount
 
-There is no routing, no backend, no state management library, and no test suite. Transaction data is held in component state only (not persisted).
-
 ## Known Issues (Intentional for Course)
 
-- `amount` is stored as a string in state, so `reduce` concatenates instead of summing — totals are wrong
 - "Freelance Work" is incorrectly typed as `"expense"` instead of `"income"` in the seed data
 - The UI has minimal styling and no delete functionality (`.delete-btn` CSS exists but no button is rendered)
